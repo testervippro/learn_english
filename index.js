@@ -1,9 +1,13 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const cors = require("cors"); //  Import thư viện CORS
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//  Cho phép tất cả domain (mọi origin)
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome! Visit <a href='/words'>/words</a> to get a random word.");
@@ -31,7 +35,7 @@ app.get("/words", (req, res) => {
   });
 });
 
-// ✅ IMPORTANT: Bind to 0.0.0.0 so Render can access it
+//  Quan trọng: Lắng nghe trên 0.0.0.0 để Render có thể truy cập
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running and listening on port ${PORT}`);
 });
