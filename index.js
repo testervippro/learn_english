@@ -22,11 +22,16 @@ app.get("/words", (req, res) => {
       .map((w) => w.trim())
       .filter((w) => w);
 
+    if (words.length === 0) {
+      return res.status(404).json({ error: "No words found in the file." });
+    }
+
     const randomWord = words[Math.floor(Math.random() * words.length)];
     res.json({ word: randomWord });
   });
 });
 
-app.listen(PORT, () => {
-  console.log(` Server running at http://localhost:${PORT}`);
+// ✅ IMPORTANT: Bind to 0.0.0.0 so Render can access it
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server running and listening on port ${PORT}`);
 });
